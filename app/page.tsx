@@ -1,6 +1,7 @@
 "use client";
 import FormPreview from "@/components/FormPreview";
 import JsonEditor from "@/components/JsonEditor";
+import Navbar from "@/components/Navbar";
 import { FormSchema } from "@/types/schema";
 import React, { useState } from "react";
 
@@ -21,10 +22,15 @@ const Home : React.FC = () =>{
     }
   };
   return(
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex flex-col h-screen">
+      <Navbar />
+        <div className="flex flex-col md:flex-row mt-5">
+      
       <JsonEditor jsonSchema={jsonSchema} onChange={handleJsonChange} error={error}/>
       <FormPreview  schema={parsedSchema}/>
     </div>
+    </div>
+    
   )
 }
 
