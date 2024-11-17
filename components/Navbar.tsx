@@ -9,26 +9,21 @@ const Navbar: React.FC = () => {
   const {isDarkMode, toggleTheme} = useTheme();
 
   return (
-    <div>
+    <div className="w-full items-center justify-center fixed z-50 top-0 px-4">
       <nav
-        className={`flex flex-row flex-wrap gap-4 justify-center items-center w-fit mx-auto py-5 px-10 rounded-[36px] ${
-          isDarkMode ? "bg-[#081229] text-white" : "bg-blue-500 text-white"
-        } drop-shadow-lg mt-2`}
+        className="flex flex-row gap-4 justify-center items-center w-fit mx-auto py-3 px-6 sm:py-5 sm:px-10 rounded-[36px] bg-[#EC5990] text-white sm:text-lg text-[12px]
+          drop-shadow-lg mt-2"
       >
-        <Link
+        <Link href="/" className="font-medium hover:scale-110 transition duration-200 ease-in-out">Home</Link>
+        <Link href="/examples" className="font-medium hover:scale-110 transition duration-200 ease-in-out">Examples</Link>
+        <Link target="_blank" rel="noopener noreferrer"
           href="https://adnan-portfolio-v2.vercel.app/"
           className="font-medium hover:scale-110 transition duration-200 ease-in-out"
         >
-          Portfolio
+          My Portfolio
         </Link>
-        <Link
-          href="https://drive.google.com/file/d/1cHq_RCbCle6DfiVqpkmY1UeOfZwTTQYp/view"
-          className="font-medium hover:scale-110 transition duration-200 ease-in-out"
-        >
-          Resume
-        </Link>
-        <div className="ml-4 flex items-center gap-2">
-        <span className="ml-2 text-sm">
+        <div className="flex items-center gap-2">
+        <span className="text-sm">
             {isDarkMode ? 
             ( <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
@@ -42,9 +37,7 @@ const Navbar: React.FC = () => {
           <Switch
             checked={isDarkMode}
             onChange={toggleTheme}
-            className={`${
-              isDarkMode ? "bg-blue-600" : "bg-gray-300"
-            } relative inline-flex h-6 w-11 items-center rounded-full`}
+            className={`bg-gray-300 relative inline-flex h-6 w-11 items-center rounded-full`}
           >
             <span
               className={`${

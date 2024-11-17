@@ -38,7 +38,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
                 <input id={field.id}
                 type={field.type}
                 placeholder={field.placholder}
-                className="border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="border rounded p-2 focus:outline-none focus:ring-2 focus:ring-[#EC5990]"
                 {...register(field.id,{
                   required:field.required,
                   pattern: field.validation?.pattern ? new RegExp(field.validation.pattern) : undefined
@@ -49,7 +49,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
                 rows={5}
                   id={field.id}
                   placeholder={field.placeholder}
-                  className="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#EC5990]"
                   {...register(field.id, {
                     required: field.required
                   })}
@@ -60,7 +60,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
                   type={field.type}
                   id={field.id}
                   placeholder={field.placeholder}
-                  className="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#EC5990]"
                   {...register(field.id, {
                     required: field.required
                   })}
@@ -69,7 +69,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
               {field.type === 'select' && field.options ? (
                 <select id={field.id}
                 {...register(field.id,{required: field.required})} 
-                className="border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="border rounded p-2 focus:outline-none focus:ring-2 focus:ring-[#EC5990]"
                 >
                   {field.options.map((option) => (
                     <option key={option.value} value={option.value}>{option.label}</option>
@@ -82,7 +82,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
             </div>
           )
         })}
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium ">Submit</button>
+        <button type="submit" className="bg-[#EC5990] text-white px-4 py-2 rounded-lg font-medium ">Submit</button>
       </form>
     </div>
   )

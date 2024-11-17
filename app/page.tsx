@@ -1,4 +1,5 @@
 "use client";
+import { useTheme } from "@/components/context/ThemeContext";
 import FormPreview from "@/components/FormPreview";
 import JsonEditor from "@/components/JsonEditor";
 import Navbar from "@/components/Navbar";
@@ -6,6 +7,7 @@ import { FormSchema } from "@/types/schema";
 import React, { useState } from "react";
 
 const Home : React.FC = () =>{
+  const {isDarkMode } = useTheme();
   const [jsonSchema, setJsonSchema] = useState<string>("");
   const [parsedSchema, setParsedSchema] = useState<FormSchema | null>(null);
   const [error,setError] = useState<string|null>(null);
@@ -22,13 +24,12 @@ const Home : React.FC = () =>{
     }
   };
   return(
-    <div className="flex flex-col h-screen">
+    <div className={`flex flex-col h-screen ${isDarkMode ? "bg-[#040404]":"bg-white"}`} >
       <Navbar />
-        <div className="flex flex-col md:flex-row mt-5">
-      
-      <JsonEditor jsonSchema={jsonSchema} onChange={handleJsonChange} error={error}/>
-      <FormPreview  schema={parsedSchema}/>
-    </div>
+      <div className="flex flex-col md:flex-row mt-[70px] sm:mt-[100px]">
+        <JsonEditor jsonSchema={jsonSchema} onChange={handleJsonChange} error={error}/>
+        <FormPreview  schema={parsedSchema}/>
+      </div>
     </div>
     
   )
