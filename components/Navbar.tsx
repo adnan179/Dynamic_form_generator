@@ -11,8 +11,8 @@ const Navbar: React.FC = () => {
   return (
     <div className="w-full items-center justify-center fixed z-50 top-0 px-4">
       <nav
-        className="flex flex-row gap-4 justify-center items-center w-fit mx-auto py-3 px-6 sm:py-5 sm:px-10 rounded-[36px] bg-[#EC5990] text-white sm:text-lg text-[12px]
-          drop-shadow-lg mt-2"
+        className="flex flex-row gap-4 justify-center items-center w-fit mx-auto py-3 px-6 sm:py-5 sm:px-10 rounded-[36px] bg-[#EC5990] text-white 
+        sm:text-[16px] text-[12px] drop-shadow-lg mt-2"
       >
         <Link href="/" className="font-medium hover:scale-110 transition duration-200 ease-in-out">Home</Link>
         <Link href="/examples" className="font-medium hover:scale-110 transition duration-200 ease-in-out">Examples</Link>

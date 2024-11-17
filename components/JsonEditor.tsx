@@ -16,7 +16,8 @@ const JsonEditor: React.FC<JSONEditorProps> = ({
   const {isDarkMode} = useTheme();
 
   return (
-    <div className="w-full md:w-1/2 p-4 bg-white">
+    <div className={`w-full md:w-1/2 p-4 bg-transparent rounded-lg
+    ${isDarkMode?"text-white  border border-gray-200":"text-black border-gray-950 border"}`}>
       <h2 className="text-xl font-bold mb-4">JSON Editor</h2>
       <Editor
         height="70vh"
@@ -24,7 +25,7 @@ const JsonEditor: React.FC<JSONEditorProps> = ({
         theme={isDarkMode ? "vs-dark" :"vs-light"}
         value={jsonSchema}
         onChange={(value) => onChange(value || "")}
-        className="drop-shadow-lg border rounded-[36px] border-gray-300"
+        className="drop-shadow-lg rounded-[36px]"
       />
       {error && <p className="text-red-500 font-medium text-[10px] mt-2">{error}</p>}
     </div>
