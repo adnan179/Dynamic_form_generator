@@ -1,6 +1,6 @@
 "use client";
 import { FormSchema } from "@/types/schema";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTheme } from "./context/ThemeContext";
 
@@ -11,6 +11,7 @@ interface FormPreviewProps {
 const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
   const {register, handleSubmit, formState:{errors}} = useForm();
   const {isDarkMode} = useTheme();
+  const [isCopied, setIsCopied] = useState<string>("");
 
   if(!schema){
     return(
@@ -22,7 +23,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
   }
 
   //function to submit the form and console log the form data
-  const onSubmit = (data:any) => {
+  const onSubmit = (data:object) => {
     console.log("Form Submitted",data);
     alert("Form submitted successfully");
   }
@@ -54,8 +55,9 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
     `;
 
     navigator.clipboard.writeText(generatedCode)
-      .then(() => alert("Form code copied to clipboard!"))
-      .catch(() => alert("Failed to copy form code."));
+      .then(() => setIsCopied("Copied!"))
+      .catch(() => setIsCopied("Failed to copy!"));
+    setTimeout(() => setIsCopied(""),2000);
   };
 
   return (
@@ -63,7 +65,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
       <div className="flex flex-row w-full justify-between items-center">
         <h1 className={`${isDarkMode ? "text-white":"text-black"} text-xl font-bold mb-4`}>Form Preview</h1>
         <button type="button" onClick={handleCopyCode} className="bg-transparent text-gray-600 border border-gray-600 px-4 py-2 rounded-lg font-medium ">
-          Copy code!
+          {isCopied ? isCopied : "Copy code!"}
         </button>
       </div>
       <h2 className={`${isDarkMode ? "text-white":"text-black"} text-xl font-bold mb-4`}>{schema.formTitle}</h2>
@@ -84,11 +86,11 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
                 ${errors[field.id] ? "border-red-500" : "border-gray-300"}`}
                 {...register(field.id, { 
                   required: field.required,
-                  minLength: field.validation?.minLength,
-                  maxLength: field.validation?.maxLength,
+                  minLength: field.validation?.minLength ? field.validation.minLength : undefined,
+                  maxLength: field.validation?.maxLength !== undefined ? field.validation.maxLength : undefined,
                   pattern: field.validation?.pattern ? new RegExp(field.validation.pattern) : undefined,
-                  min: field.validation?.min,
-                  max: field.validation?.max,
+                  min: field.validation?.min !== undefined ? field.validation.min : undefined,
+                  max: field.validation?.max !== undefined ? field.validation.max : undefined,
                 })}/>
               ):null}
               {field.type === 'textarea' ? (
