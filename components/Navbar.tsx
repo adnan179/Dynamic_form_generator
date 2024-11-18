@@ -14,14 +14,16 @@ const Navbar: React.FC = () => {
         className="flex flex-row gap-4 justify-center items-center w-fit mx-auto py-3 px-6 sm:py-5 sm:px-10 rounded-[36px] bg-gray-800 text-white 
         sm:text-[16px] text-[12px] drop-shadow-lg mt-2"
       >
-        <Link href="/" className="font-medium hover:scale-110 transition duration-200 ease-in-out">Home</Link>
-        <Link href="/examples" className="font-medium hover:scale-110 transition duration-200 ease-in-out">Examples</Link>
         <Link target="_blank" rel="noopener noreferrer"
-          href="https://adnan-portfolio-v2.vercel.app/"
-          className="font-medium hover:scale-110 transition duration-200 ease-in-out"
-        >
-          My Portfolio
-        </Link>
+        href="https://adnan-portfolio-v2.vercel.app/"
+        className="flex flex-row gap-1 items-center text-white font-bold hover:scale-110 ease-in-out transition duration-300"
+      >
+        <h1 className=" text-[15px]">AdnanX</h1>
+        <div className="flex flex-col">
+          <h1 className="text-[8px]">Dev</h1>
+          <h1 className="text-[8px] -mt-1">Design</h1>
+        </div>
+      </Link>
         <div className="flex items-center gap-2">
         <span className="text-sm">
             {isDarkMode ? 
@@ -37,7 +39,7 @@ const Navbar: React.FC = () => {
           <Switch
             checked={isDarkMode}
             onChange={toggleTheme}
-            className={`bg-gray-900 relative inline-flex h-6 w-11 items-center rounded-full`}
+            className="bg-gray-900 relative inline-flex h-6 w-11 items-center rounded-full hover:scale-110 ease-in-out transition duration-300"
           >
             <span
               className={`${

@@ -24,9 +24,9 @@ const Home : React.FC = () =>{
     }
   };
   return(
-    <div className={`flex flex-col min-h-screen ${isDarkMode ? "bg-[#040404]":"bg-white"}`} >
+    <div className={`flex flex-col min-h-screen px-2 sm:px-8 ${isDarkMode ? "bg-[#040404]":"bg-white"}`} >
       <Navbar />
-      <div className="flex flex-col md:flex-row mt-[70px] sm:mt-[100px]">
+      <div className="flex flex-col md:flex-row mt-[70px] sm:mt-[80px]">
         <JsonEditor jsonSchema={jsonSchema} onChange={handleJsonChange} error={error}/>
         <FormPreview  schema={parsedSchema}/>
       </div>

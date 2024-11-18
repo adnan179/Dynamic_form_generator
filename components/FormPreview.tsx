@@ -59,7 +59,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
   };
 
   return (
-    <div className="w-full md:w-1/2 p-4">
+    <div className="w-full md:w-2/5 p-4">
       <div className="flex flex-row w-full justify-between items-center">
         <h1 className={`${isDarkMode ? "text-white":"text-black"} text-xl font-bold mb-4`}>Form Preview</h1>
         <button type="button" onClick={handleCopyCode} className="bg-transparent text-gray-600 border border-gray-600 px-4 py-2 rounded-lg font-medium ">
@@ -69,22 +69,26 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
       <h2 className={`${isDarkMode ? "text-white":"text-black"} text-xl font-bold mb-4`}>{schema.formTitle}</h2>
       {schema.formDescription && <p className="text-gray-600 mb-4">{schema.formDescription}</p>}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {schema.fields.map((field) => {
+        {schema && schema.fields.map((field) => {
           return(
             <div key={field.id} className="flex flex-col">
               <label htmlFor={field.id} className={`${isDarkMode?"text-gray-200":"text-gray-900"} font-semibold`}>{field.label}</label>
-              {field.type === 'text' || field.type === 'email' ? (
+              {field.type === 'text' || field.type === 'email' ||field.type === 'password' || field.type==="number"? (
                 <input id={field.id}
                 type={field.type}
                 placeholder={field.placeholder}
                 className={`
                   border rounded-lg p-2 
-                  focus:outline-none focus:ring-2 focus:ring-[#EC5990] 
-                  ${isDarkMode ? "bg-gray-800 border-gray-600 text-white" : "bg-white border-gray-300 text-black"}
-                `}
-                {...register(field.id,{
-                  required:field.required,
-                  pattern: field.validation?.pattern ? new RegExp(field.validation.pattern) : undefined
+                  focus:outline-none focus:ring-2  
+                  ${isDarkMode ? "bg-gray-800 border-gray-600 text-white focus:ring-gray-100" : "bg-white border-gray-300 text-black focus:ring-gray-900"}
+                ${errors[field.id] ? "border-red-500" : "border-gray-300"}`}
+                {...register(field.id, { 
+                  required: field.required,
+                  minLength: field.validation?.minLength,
+                  maxLength: field.validation?.maxLength,
+                  pattern: field.validation?.pattern ? new RegExp(field.validation.pattern) : undefined,
+                  min: field.validation?.min,
+                  max: field.validation?.max,
                 })}/>
               ):null}
               {field.type === 'textarea' ? (
@@ -94,9 +98,9 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
                   placeholder={field.placeholder}
                   className={`
                     border rounded-lg p-2 
-                    focus:outline-none focus:ring-2 focus:ring-[#EC5990] 
-                    ${isDarkMode ? "bg-gray-800 border-gray-600 text-white" : "bg-white border-gray-300 text-black"}
-                  `}
+                    focus:outline-none focus:ring-2 
+                    ${isDarkMode ? "bg-gray-800 border-gray-600 text-white focus:ring-gray-100" : "bg-white border-gray-300 text-black focus:ring-gray-900"}
+                  ${errors[field.id] ? "border-red-500" : "border-gray-300"}`}
                   {...register(field.id, {
                     required: field.required
                   })}
@@ -109,21 +113,82 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
                   placeholder={field.placeholder}
                   className={`
                     border rounded-lg p-2
-                    focus:outline-none focus:ring-2 focus:ring-[#EC5990] 
-                    ${isDarkMode ? "bg-gray-800 border-gray-600 text-white" : "bg-white border-gray-300 text-black"}
-                  `}
+                    focus:outline-none focus:ring-2 
+                    ${isDarkMode ? "bg-gray-800 border-gray-600 text-white focus:ring-gray-100" : "bg-white border-gray-300 text-black focus:ring-gray-900"}
+                  ${errors[field.id] ? "border-red-500" : "border-gray-300"}`}
                   {...register(field.id, {
                     required: field.required
                   })}
                 />
               ) : null}
+              {field.type === 'date' ? (
+                <input
+                  type={field.type}
+                  id={field.id}
+                  placeholder={field.placeholder}
+                  className={`
+                    border rounded-lg p-2
+                    focus:outline-none focus:ring-2 
+                    ${isDarkMode ? "bg-gray-800 border-gray-600 text-white focus:ring-gray-100" : "bg-white border-gray-300 text-black focus:ring-gray-900"}
+                  ${errors[field.id] ? "border-red-500" : "border-gray-300"}`}
+                  {...register(field.id, {
+                    required: field.required
+                  })}
+                />
+              ) : null}
+              {field.type === 'checkbox' ? (
+                <div className="mt-2">
+                  {field.options ? (field.options?.map((option, index) => (
+                    <div key={index} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id={`${field.id}-${option.value}`}
+                        value={option.value}
+                        className="border rounded-lg p-2 w-4 h-4 mr-2 "
+                        {...register(field.id, {required: field.required})}
+                      />
+                      <label htmlFor={`${field.id}-${option.value}`} className={`text-sm ${isDarkMode?"text-white":"text-black"}`}>
+                        {option.label}
+                      </label>
+                    </div>
+                  ))):(
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id={field.id}
+                        className="border rounded-lg p-2 w-4 h-4 mr-2 "
+                        {...register(field.id, {required: field.required})}
+                      />
+                      <label htmlFor={field.id} className={`text-sm ${isDarkMode?"text-white":"text-black"}`}>
+                        {field.label}
+                      </label>
+                    </div>
+                  )}
+                </div>
+              ): null}
+              {field.type === "radio" ? (
+              <div className="flex flex-col space-y-2">
+                {field.options?.map((option) => (
+                  <label key={option.value} className="flex items-center">
+                    <input
+                      type="radio"
+                      value={option.value}
+                      id={field.id}
+                      className="mr-2"
+                      {...register(field.id, { required: field.required })}
+                    />
+                    {option.label}
+                  </label>
+                ))}
+              </div>
+            ) : null}
               {field.type === 'select' && field.options ? (
                 <select id={field.id}
                 {...register(field.id,{required: field.required})} 
                 className={`
                   border rounded-lg p-2 
-                  focus:outline-none focus:ring-2 focus:ring-[#EC5990] 
-                  ${isDarkMode ? "bg-gray-800 border-gray-600 text-white" : "bg-white border-gray-300 text-black"}
+                  focus:outline-none focus:ring-2 
+                  ${isDarkMode ? "bg-gray-800 border-gray-600 text-white focus:ring-gray-100" : "bg-white border-gray-300 text-black focus:ring-gray-900"}
                 `}
                 >
                   {field.options.map((option) => (
@@ -137,7 +202,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
             </div>
           )
         })}
-        <button type="submit" className="bg-transparent px-4 py-2 rounded-lg font-medium text-gray-600 border border-gray-600">Submit</button>
+        <button type="submit" className="bg-transparent px-4 py-2 rounded-lg font-medium text-gray-600 border border-gray-600 hover:scale-110 transition duration-300 ease-linear">Submit</button>
       </form>
     </div>
   )

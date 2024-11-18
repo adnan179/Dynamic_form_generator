@@ -1,6 +1,7 @@
 import React from "react";
 import Editor from "@monaco-editor/react";
 import { useTheme } from "./context/ThemeContext";
+import JsonSchemaExamples from "./JsonSchemaExamples";
 
 
 interface JSONEditorProps {
@@ -17,17 +18,24 @@ const JsonEditor: React.FC<JSONEditorProps> = ({
   const {isDarkMode} = useTheme();
 
   return (
-    <div className={`w-full md:w-1/2 p-4 bg-transparent rounded-lg
+    <div className={`w-full md:w-3/5 p-4 bg-transparent rounded-lg
     ${isDarkMode?"text-white border border-gray-200":"text-black border-gray-950 border"}`}>
-      <h2 className="text-xl font-bold mb-4">JSON Editor</h2>
-      <Editor
-        height="70vh"
-        language="json"
-        theme={isDarkMode ? "hc-black" :"vs-light"}
-        value={jsonSchema}
-        onChange={(value) => onChange(value || "")}
-      />
-      {error && <p className="text-red-500 font-medium text-[10px] mt-2">{error}</p>}
+      <div>
+        <h2 className="text-xl font-bold mb-4">JSON Schema Examples:</h2>
+        <JsonSchemaExamples />
+      </div>
+      <div className="mt-5">
+        <h2 className="text-xl font-bold mb-4">JSON Editor</h2>
+        <Editor
+          height="50vh"
+          language="json"
+          theme={isDarkMode ? "hc-black" :"vs-light"}
+          value={jsonSchema}
+          onChange={(value) => onChange(value || "")}
+        />
+        {error && <p className="text-red-500 font-medium text-[10px] mt-2">{error}</p>}
+      </div>
+      
     </div>
   );
 };
