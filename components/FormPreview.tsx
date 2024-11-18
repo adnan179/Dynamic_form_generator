@@ -14,6 +14,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
   });
   const {isDarkMode} = useTheme();
   const [isCopied, setIsCopied] = useState<string>("");
+  const [JsonCopy,setJsonCopy] = useState<string>("");
 
   if(!schema){
     return(
@@ -61,6 +62,16 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
       .then(() => setIsCopied("Copied!"))
       .catch(() => setIsCopied("Failed to copy!"));
     setTimeout(() => setIsCopied(""),2000);
+  };
+
+  //function to copy the form data in the json format
+  const handleCopyJSON = () => {
+    const formData = watch();
+    const jsonString = JSON.stringify(formData,null,2);
+    navigator.clipboard.writeText(jsonString)
+      .then(() => setJsonCopy("Copied!"))
+      .catch(() => setJsonCopy("Failed to copy!"));
+    setTimeout(() => setJsonCopy(""),2000);
   };
 
   //function to download the JSON format of the form data
@@ -219,11 +230,18 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
         })}
         <button type="submit" className="bg-transparent px-4 py-2 rounded-lg font-medium text-gray-600 border border-gray-600 hover:scale-110 transition duration-300 ease-linear">Submit</button>
       </form>
-      <button onClick={handleDownloadJSON}
+      <div className="flex flex-row gap-2">
+        <button onClick={handleDownloadJSON} disabled={!isValid}
+          className={`mt-2 px-4 py-2 rounded-lg font-medium ${isValid ? "bg-gray-900 text-white" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`}
+          title={!isValid ? "Fill all required fields" : ""}
+        >Download JSON</button>
+        <button onClick={handleCopyJSON}
       disabled={!isValid}
       className={`mt-2 px-4 py-2 rounded-lg font-medium ${isValid ? "bg-gray-900 text-white" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`}
         title={!isValid ? "Fill all required fields" : ""}
-      >Download JSON</button>
+      >{JsonCopy ? JsonCopy:"Copy JSON"}</button>
+      </div>
+      
     </div>
   )
 }
