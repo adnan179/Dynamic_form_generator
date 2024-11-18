@@ -9,7 +9,9 @@ interface FormPreviewProps {
 }
 
 const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
-  const {register, handleSubmit, formState:{errors}} = useForm();
+  const {register, handleSubmit, formState:{errors,isValid},watch} = useForm({
+    mode:"onChange",
+  });
   const {isDarkMode} = useTheme();
   const [isCopied, setIsCopied] = useState<string>("");
 
@@ -24,7 +26,8 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
 
   //function to submit the form and console log the form data
   const onSubmit = (data:object) => {
-    console.log("Form Submitted",data);
+    const result = JSON.stringify(data,null,2);
+    console.log("Form Submitted",result);
     alert("Form submitted successfully");
   }
 
@@ -58,6 +61,16 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
       .then(() => setIsCopied("Copied!"))
       .catch(() => setIsCopied("Failed to copy!"));
     setTimeout(() => setIsCopied(""),2000);
+  };
+
+  //function to download the JSON format of the form data
+  const handleDownloadJSON = () => {
+    const formData = watch();
+    const blob = new Blob([JSON.stringify(formData,null,2)],{type:"application/json"});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${schema.formTitle || "form"}.json`;
+    link.click();
   };
 
   return (
@@ -206,6 +219,11 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
         })}
         <button type="submit" className="bg-transparent px-4 py-2 rounded-lg font-medium text-gray-600 border border-gray-600 hover:scale-110 transition duration-300 ease-linear">Submit</button>
       </form>
+      <button onClick={handleDownloadJSON}
+      disabled={!isValid}
+      className={`mt-2 px-4 py-2 rounded-lg font-medium ${isValid ? "bg-gray-900 text-white" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`}
+        title={!isValid ? "Fill all required fields" : ""}
+      >Download JSON</button>
     </div>
   )
 }
