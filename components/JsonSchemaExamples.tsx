@@ -439,7 +439,7 @@ const JsonSchemaExamples: React.FC = () => {
   return (
     <div className="flex flex-row gap-3 overflow-auto custom-scrollbar">
       {Examples.map((example, idx) => (
-        <div
+        <div id={`example-card-${idx}`}
           key={idx}
           className={`relative bg-transparent min-w-[300px] h-[150px] p-2 rounded-lg overflow-hidden border border-gray-300 cursor-pointer hover:shadow-md
             ${isDarkMode?"text-white":"text-black"}`}
@@ -447,13 +447,13 @@ const JsonSchemaExamples: React.FC = () => {
         > 
           {/* copied overlay */}
           {copiedIndex === idx && (
-            <div className={`absolute inset-0 flex items-center justify-center backdrop-blur-sm
+            <div id={`copied-${idx}`} className={`absolute inset-0 flex items-center justify-center backdrop-blur-sm
             ${isDarkMode?"bg-white/50":"bg-black/50"}`}>
               <span className="text-white text-sm">Copied!</span>
             </div>
           )}
           {/* copied overlay */}
-          <h3 className="font-bold text-sm mb-2">{example.formTitle}</h3>
+          <h3 id={`form-title-${idx}`} className="font-bold text-sm mb-2">{example.formTitle}</h3>
           <pre className="text-xs whitespace-pre-wrap">
             {JSON.stringify(example, null, 2).slice(0, 400)}
             {JSON.stringify(example, null, 2).length > 400 && "..."}

@@ -16,15 +16,6 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
   const [isCopied, setIsCopied] = useState<string>("");
   const [JsonCopy,setJsonCopy] = useState<string>("");
 
-  if(!schema){
-    return(
-      <div className="w-full md:w-1/2 p-4">
-        <h2 className={`${isDarkMode ? "text-white":"text-black"} text-xl font-bold mb-4`}>Form Preview</h2>
-        <p className="text-gray-500 font-semibold">No valid schema available.Please provide a valid schema</p>
-      </div>
-    );
-  }
-
   //function to submit the form and console log the form data
   const onSubmit = (data:object) => {
     const result = JSON.stringify(data,null,2);
@@ -32,7 +23,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
     alert("Form submitted successfully");
   }
 
-  //function to copy the code for the form being renderd
+  //function to copy the code for the form being rendered
   const handleCopyCode = () => {
     const generatedCode = `
       <form>
@@ -84,6 +75,15 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
     link.click();
   };
 
+  //component when the schema is not valid or null
+  if(!schema){
+    return(
+      <div id="null-schema-component" className="w-full md:w-1/2 p-4">
+        <h2 className={`${isDarkMode ? "text-white":"text-black"} text-xl font-bold mb-4`}>Form Preview</h2>
+        <p className="text-gray-500 font-semibold">No valid schema available.Please provide a valid schema</p>
+      </div>
+    );
+  }
   return (
     <div className="w-full md:w-2/5 p-4">
       <div className="flex flex-row w-full justify-between items-center">
@@ -94,11 +94,11 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
       </div>
       <h2 className={`${isDarkMode ? "text-white":"text-black"} text-xl font-bold mb-4`}>{schema.formTitle}</h2>
       {schema.formDescription && <p className="text-gray-600 mb-4">{schema.formDescription}</p>}
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form id="form-preview" onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {schema && schema.fields.map((field) => {
           return(
             <div key={field.id} className="flex flex-col">
-              <label htmlFor={field.id} className={`${isDarkMode?"text-gray-200":"text-gray-900"} font-semibold`}>{field.label}</label>
+              <label id={field.id} htmlFor={field.id} className={`${isDarkMode?"text-gray-200":"text-gray-900"} font-semibold`}>{field.label}</label>
               {field.type === 'text' || field.type === 'email' ||field.type === 'password' || field.type==="number"? (
                 <input id={field.id}
                 type={field.type}

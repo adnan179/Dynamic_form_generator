@@ -25,15 +25,15 @@ const JsonEditor: React.FC<JSONEditorProps> = ({
         <JsonSchemaExamples />
       </div>
       <div className="mt-5">
-        <h2 className="text-xl font-bold mb-4">JSON Editor</h2>
-        <Editor
+        <h2 id="Json-editor-title" className="text-xl font-bold mb-4">JSON Editor</h2>
+        <Editor className="monaco-editor"
           height="50vh"
           language="json"
           theme={isDarkMode ? "hc-black" :"vs-light"}
           value={jsonSchema}
           onChange={(value) => onChange(value || "")}
         />
-        {error && <p className="text-red-500 font-medium text-[10px] mt-2">{error}</p>}
+        {error && <p id="editor-error-message" className="text-red-500 font-medium text-[10px] mt-2">{error}</p>}
       </div>
       
     </div>
