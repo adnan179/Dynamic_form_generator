@@ -1,9 +1,10 @@
 # 📝 Dynamic Form Generator
 
-**Hosted link:**  
+**Hosted link:**  https://dynamic-form-generator-flmq.vercel.app/
+
 *A Dynamic Form Generator is a robust React-based project that allows users to generate dynamic forms based on predefined schemas. Real-time previews, customizable validation, and a clean UI make form creation seamless and efficient. Perfect for developers and businesses who need dynamic form rendering on the fly!*
 
-Note: The JSON schema examples are in the website itself, check above the Json Editor!
+> Note: The JSON schema examples are in the website itself, check above the JSON Editor!
 
 ## ✨ Features
 1️⃣ **Dynamic Form Rendering**: Generate forms based on schema definitions.
