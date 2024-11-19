@@ -71,7 +71,10 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
     const blob = new Blob([JSON.stringify(formData,null,2)],{type:"application/json"});
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `${schema.formTitle || "form"}.json`;
+    // Check if schema is not null before accessing its properties
+    if (schema) {
+      link.download = `${schema.formTitle || "form"}.json`;
+    }
     link.click();
   };
 
