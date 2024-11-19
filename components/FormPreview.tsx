@@ -27,7 +27,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
   const handleCopyCode = () => {
     const generatedCode = `
       <form>
-        ${schema.fields.map((field) => {
+        ${schema && schema.fields.map((field) => {
           if (field.type === "text" || field.type === "email") {
             return `<input type="${field.type}" id="${field.id}" placeholder="${field.placeholder}" className="border rounded p-2 focus:outline-none focus:ring-2 focus:ring-[#EC5990]"/>`;
           }
@@ -96,7 +96,7 @@ const FormPreview:React.FC<FormPreviewProps> = ({schema}) => {
         </button>
       </div>
       <h2 className={`${isDarkMode ? "text-white":"text-black"} text-xl font-bold mb-4`}>{schema.formTitle}</h2>
-      {schema.formDescription && <p className="text-gray-600 mb-4">{schema.formDescription}</p>}
+      { schema && schema.formDescription && <p className="text-gray-600 mb-4">{schema.formDescription}</p>}
       <form id="form-preview" onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {schema && schema.fields.map((field) => {
           return(
