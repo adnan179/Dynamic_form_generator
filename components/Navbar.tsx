@@ -23,7 +23,9 @@ const Navbar: React.FC = () => {
           <h1 className="text-[8px]">Dev</h1>
           <h1 className="text-[8px] -mt-1">Design</h1>
         </div>
+      
       </Link>
+      <Link className="text-white font-bold hover:scale-110 ease-in-out transition duration-300" href="https://github.com/adnan179/Dynamic_form_generator" target="_blank" rel="noopener noreferrer">Github</Link>
         <div className="flex items-center gap-2">
         <span className="text-sm">
             {isDarkMode ? 
