@@ -39,6 +39,8 @@
 
 4️⃣ **typescript:** Static type checking for maintainable code
 
+## 🎨 Colors used
+`#040404` `#FFFFFF` `#000000` `#808080` `#111827`
 ## 🚀 Installation
 _Follow these steps to get the Dynamic Form Generator up and running on your local machine:_
 
